@@ -118,9 +118,9 @@ int	main(int argc, char **argv)
 
 	size = 0;
 	/*ft_input_arg(argc, argv);*/
-	/*char *str = get_dict();*/
+	char *str = get_dict();
 	/*char **arr = split_newline(str, &size);*/
-	struct	node *new_node = construct_node(trim_spaces("100: hundred"));
+	node *new_node = construct_node(trim_spaces("100: hundred"));
 	/*printf("str size: %d\n", size);*/
 	printf("new node key: %s\nnew node value: %s\n", new_node->key, new_node->value);
 	/*printf("trim str: %s\n", trim_spaces(arr[1]));*/
