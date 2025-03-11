@@ -12,6 +12,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+int	ft_strlen(char *str)
+{
+	int	count;
+	int	i;
+
+	i = -1;
+	count = 0;
+	while (str[++i] != 0)
+		count++;
+	return (count);
+}
+
 int	is_sep(char c, char *charset)
 {
 	int	i;
@@ -27,23 +39,29 @@ int	is_sep(char c, char *charset)
 }
 // NOTE: function to find out how many boxes we can get from a string seperated by charset
 // 
-int	count_box(char *str, char *charset)
+int	count_word(char *str, char *charset)
 {
 	int	i;
-	int	box;
+	int	word;
+	int	mark;
 
 	i = 0;
-	box = 0;
+	mark = 0;
+	word = 0;
 	while (str[i] != 0)
 	{
-		if (is_sep(str[i], charset))
+		if (!is_sep(str[i], charset))
 			i++;
 		else
 		{
+			mark = i;
 			i++;
-			box++;
+			word++;
 		}
 	}
+	if (i > mark)
+		word++;
+	return (word);
 }
 
 char	**ft_split(char *str, char *charset)
@@ -54,7 +72,5 @@ char	**ft_split(char *str, char *charset)
 
 int main()
 {
-	printf("%d\n", is_sep('8', "oiwueoiru"));
-	for (int i = 0; i < 10; i++)
-		printf("%d\n", is_sep('8', "oiwueoiru"));
+	printf("%d\n", count_word("hive,he,lsing,ki", ",i"));
 }
