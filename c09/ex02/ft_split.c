@@ -37,30 +37,25 @@ int	is_sep(char c, char *charset)
 	}
 	return (0);
 }
-// NOTE: function to find out how many boxes we can get from a string seperated by charset
-// 
+
 int	count_word(char *str, char *charset)
 {
-	int	i;
 	int	word;
 	int	mark;
 
-	i = 0;
 	mark = 0;
 	word = 0;
-	while (str[i] != 0)
+	while (*str != 0)
 	{
-		if (!is_sep(str[i], charset))
-			i++;
-		else
+		if (!is_sep(*str, charset) && mark == 0) 
 		{
-			mark = i;
-			i++;
 			word++;
+			mark = 1;
 		}
+		else if (is_sep(*str, charset))
+			mark = 0;
+		str++;
 	}
-	if (i > mark)
-		word++;
 	return (word);
 }
 
@@ -72,5 +67,5 @@ char	**ft_split(char *str, char *charset)
 
 int main()
 {
-	printf("%d\n", count_word("hive,he,lsing,ki", ",i"));
+	printf("%d\n", count_word("hive,hel", ",i"));
 }
