@@ -62,7 +62,7 @@ char	**split_newline(char *str, int *str_size)
 
 	*str_size = line;
 
-	char	**arr = malloc(line * sizeof(char *) + 1);
+	char	**arr = malloc((line +1) * sizeof(char *));
 
 	i = 0;
 	int 	j;
@@ -83,7 +83,7 @@ char	**split_newline(char *str, int *str_size)
 		}
 		else
 		{
-			arr[j] = malloc((size + 1) * sizeof(char *));
+			arr[j] = malloc((size + 1));
 			k = i - size;
 			while (str[k] != '\n')
 			{
@@ -98,7 +98,7 @@ char	**split_newline(char *str, int *str_size)
 			i++;
 		}
 	}
-	arr[line][0] = '\0';
+	arr[line] = NULL;
 	return (arr);
 }
 
@@ -119,11 +119,11 @@ int	main(int argc, char **argv)
 	size = 0;
 	/*ft_input_arg(argc, argv);*/
 	char *str = get_dict();
-	/*char **arr = split_newline(str, &size);*/
-	node *new_node = construct_node(trim_spaces("100: hundred"));
-	/*printf("str size: %d\n", size);*/
-	printf("new node key: %s\nnew node value: %s\n", new_node->key, new_node->value);
-	/*printf("trim str: %s\n", trim_spaces(arr[1]));*/
+	char **arr = split_newline(str, &size);
+	/*node *new_node = construct_node(trim_spaces("100: hundred"));*/
+	printf("str size: %d\n", size);
+	/*printf("new node key: %s\nnew node value: %s\n", new_node->key, new_node->value);*/
+	printf("trim str: %s\n", (arr[1]));
 }
 
 // NOTE: function takes a string and remove all spaces in it. need free after use
