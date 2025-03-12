@@ -12,18 +12,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int	ft_strlen(char *str)
-{
-	int	count;
-	int	i;
-
-	i = -1;
-	count = 0;
-	while (str[++i] != 0)
-		count++;
-	return (count);
-}
-
 int	is_sep(char c, char *charset)
 {
 	int	i;
@@ -38,34 +26,84 @@ int	is_sep(char c, char *charset)
 	return (0);
 }
 
-int	count_word(char *str, char *charset)
+char	**count_word(char *str, char *charset)
 {
 	int	word;
 	int	mark;
+	char	**arr;
+	int	i;
 
+	i = 0;
 	mark = 0;
 	word = 0;
-	while (*str != 0)
+	while (str[i] != 0)
 	{
-		if (!is_sep(*str, charset) && mark == 0) 
+		if (!is_sep(str[i], charset) && mark == 0) 
 		{
 			word++;
 			mark = 1;
 		}
-		else if (is_sep(*str, charset))
+		else if (is_sep(str[i], charset))
 			mark = 0;
 		str++;
 	}
-	return (word);
+	arr = malloc((word + 1) * sizeof(char *));
+	if (!arr)
+		return (NULL);
+	return (arr);
+}
+
+char	*malloc_word(int size)
+{
+	char	*string;
+
+	if (size > 0)
+		string = malloc(size + 1);
+	else
+		return (NULL);
+	if (!string)
+		return (NULL);
+	return (string);
 }
 
 char	**ft_split(char *str, char *charset)
 {
-	char **arr;
+	char	**arr;
+	char	*start;
+	int	size;
+	int	i;
+	int	j;
+
+	j = 0;
+	i = 0;
+	size = 0;
+	start = str;
+	arr = count_word(str, charset);
+	while (*str != 0)
+	{
+		if (!is_sep(*str, charset))
+			size++;
+		else if (is_sep(*str, charset))
+		{
+			*arr = malloc_word(size);
+			printf("%c\n", *start);
+			while (!is_sep(*start, charset))
+			{
+				(*arr)[j++] = *start;
+				start++;
+			}
+			arr++;
+		}
+		size = 0;
+		j = 0;
+		str++;
+	}
 	return (arr);
 }
 
 int main()
 {
-	printf("%d\n", count_word("hive,hel", ",i"));
+	char **str = ft_split("hive,hel,", ",i");
+	for (int i = 0; i < 10; i++)
+		printf("%s\n", str[i]);
 }

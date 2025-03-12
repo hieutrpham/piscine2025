@@ -77,13 +77,16 @@ char	**split_newline(char *str, int *str_size)
 	while (str[i] != 0) 
 	{
 		if (str[i] != '\n')
-		{
 			size++;
-			i++;
-		}
 		else
 		{
-			arr[j] = malloc((size + 1));
+			arr[j] = malloc(size + 1);
+			if (!arr[j])
+			{
+				while (arr[c] != NULL)
+					free(arr[c]);
+				return (NULL);
+			}
 			k = i - size;
 			while (str[k] != '\n')
 			{
@@ -95,8 +98,8 @@ char	**split_newline(char *str, int *str_size)
 			size = 0;
 			c = 0;
 			j++;
-			i++;
 		}
+		i++;
 	}
 	arr[line] = NULL;
 	return (arr);
