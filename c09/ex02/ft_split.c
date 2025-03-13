@@ -69,34 +69,38 @@ char	*malloc_word(int size)
 char	**ft_split(char *str, char *charset)
 {
 	char	**arr;
-	char	*start;
 	int	size;
 	int	i;
 	int	j;
+	int	k;
+	int	c;
 
+	c = 0;
 	j = 0;
 	i = 0;
+	k = 0;
 	size = 0;
-	start = str;
 	arr = count_word(str, charset);
-	while (*str != 0)
+	while (str[k] != 0)
 	{
-		if (!is_sep(*str, charset))
+		if (!is_sep(str[k], charset))
 			size++;
-		else if (is_sep(*str, charset))
+		else if (is_sep(str[k], charset))
 		{
-			*arr = malloc_word(size);
-			printf("%c\n", *start);
-			while (!is_sep(*start, charset))
+			arr[i] = malloc_word(size + 1);
+			k = i - size;
+			while (!is_sep(str[c], charset))
 			{
-				(*arr)[j++] = *start;
-				start++;
+				arr[i][j++] = str[c];
+				c++;
 			}
-			arr++;
+			arr[i][j] = '\0';
 		}
 		size = 0;
 		j = 0;
-		str++;
+		c = 0;
+		i++;
+		k++;
 	}
 	return (arr);
 }
