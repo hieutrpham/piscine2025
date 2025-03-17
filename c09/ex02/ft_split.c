@@ -26,7 +26,7 @@ int	is_sep(char c, char *charset)
 	return (0);
 }
 
-char	**count_word(char *str, char *charset)
+char	**arr_alloc(char *str, char *charset)
 {
 	int	word;
 	int	mark;
@@ -45,7 +45,7 @@ char	**count_word(char *str, char *charset)
 		}
 		else if (is_sep(str[i], charset))
 			mark = 0;
-		str++;
+		i++;
 	}
 	arr = malloc((word + 1) * sizeof(char *));
 	if (!arr)
@@ -53,61 +53,53 @@ char	**count_word(char *str, char *charset)
 	return (arr);
 }
 
-char	*malloc_word(int size)
-{
-	char	*string;
-
-	if (size > 0)
-		string = malloc(size + 1);
-	else
-		return (NULL);
-	if (!string)
-		return (NULL);
-	return (string);
-}
-
 char	**ft_split(char *str, char *charset)
 {
 	char	**arr;
 	int	size;
 	int	i;
+	int	i1;
 	int	j;
-	int	k;
-	int	c;
+	int start;
 
-	c = 0;
 	j = 0;
 	i = 0;
-	k = 0;
+	i1 = 0;
 	size = 0;
-	arr = count_word(str, charset);
-	while (str[k] != 0)
+	arr = arr_alloc(str, charset);
+	while (str[i] != 0)
 	{
-		if (!is_sep(str[k], charset))
-			size++;
-		else if (is_sep(str[k], charset))
+		if (is_sep(str[i], charset))
 		{
-			arr[i] = malloc_word(size + 1);
-			k = i - size;
-			while (!is_sep(str[c], charset))
-			{
-				arr[i][j++] = str[c];
-				c++;
-			}
-			arr[i][j] = '\0';
+			i++;
+			continue;
 		}
+		start = i;
+		while (!is_sep(str[i], charset))
+		{
+			size++;
+			i++;
+			continue;
+		}
+		arr[j] = malloc(size + 1);
+		while (!is_sep(str[start], charset))
+			arr[j][i1++] = str[start++];
+		arr[j][i1] = 0;
+		j++;
+		i1 = 0;
 		size = 0;
-		j = 0;
-		c = 0;
-		i++;
-		k++;
 	}
+	arr[j] = 0;
 	return (arr);
 }
 
 int main()
 {
 	char **str = ft_split("hive,hel,", ",i");
-	for (int i = 0; i < 10; i++)
+	int i = 0;
+	while (str[i] != 0)
+	{
 		printf("%s\n", str[i]);
+		i++;
+	}
 }
