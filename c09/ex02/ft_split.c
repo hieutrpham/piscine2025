@@ -95,7 +95,7 @@ char	**ft_split(char *str, char *charset)
 
 int main()
 {
-	char **str = ft_split("hive,hel,", ",i");
+	char **str = ft_split("hive,hel,heiru,kasjdfuieri,asdf", ",i");
 	int i = 0;
 	while (str[i] != 0)
 	{
