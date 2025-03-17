@@ -1,5 +1,5 @@
 CC=cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror $(foreach D, $(INC_PATH), -I$(D))
 SRC_PATH = ./srcs/
 INC_PATH = ./includes/
 SRC = $(foreach D, $(SRC_PATH), $(wildcard $(D)/*.c))
