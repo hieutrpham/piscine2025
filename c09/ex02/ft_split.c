@@ -75,14 +75,16 @@ char	**ft_split(char *str, char *charset)
 			continue;
 		}
 		start = i;
-		while (!is_sep(str[i], charset))
+		while (!is_sep(str[i], charset) && str[i] != 0)
 		{
 			size++;
 			i++;
 			continue;
 		}
 		arr[j] = malloc(size + 1);
-		while (!is_sep(str[start], charset))
+		if (!arr[j])
+			return (NULL);
+		while (!is_sep(str[start], charset) && str[start] != 0)
 			arr[j][i1++] = str[start++];
 		arr[j][i1] = 0;
 		j++;
@@ -95,7 +97,7 @@ char	**ft_split(char *str, char *charset)
 
 int main()
 {
-	char **str = ft_split("hive,hel,heiru,kasjdfuieri,asdf", ",i");
+	char **str = ft_split("hive,dferi,dasfkjwer,werj", ",");
 	int i = 0;
 	while (str[i] != 0)
 	{
