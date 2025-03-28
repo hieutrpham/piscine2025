@@ -12,7 +12,6 @@ void	ft_list_sort(t_list **begin_list, int (*cmp)(void *, void *))
 	if (!one || !one->next)
 		return;
 	two = one->next;
-	// if head is to switch with the next node. two is the new head now
 	if (cmp(one->data, two->data) > 0)
 	{
 		one->next = two->next;
@@ -21,6 +20,12 @@ void	ft_list_sort(t_list **begin_list, int (*cmp)(void *, void *))
 	}
 	prev = two;
 	current = one;
+	int swap = 1;
+	while (swap)
+	{
+		swap = 0;
+		current = *begin_list;
+	}
 	while (current->next)
 	{
 		next = current->next;
