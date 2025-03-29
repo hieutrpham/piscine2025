@@ -5,8 +5,11 @@ void	ft_list_sort(t_list **begin_list, int (*cmp)(void *, void *))
 	t_list	*prev;
 	t_list	*current;
 	t_list	*next;
+	int swap;
 
-	int swap = 1;
+	swap = 1;
+	if (!begin_list || !*begin_list || !(*begin_list)->next)
+		return;
 	while (swap)
 	{
 		swap = 0;
