@@ -15,18 +15,17 @@ void	enqueue(s_queue **q, t_btree *node)
 	new_q = malloc(sizeof(s_queue));
 	if (!new_q)
 		return;
+	new_q->node = node;
+	new_q->next = NULL;
 	if (*q == NULL)
-	{
 		*q = new_q;
-		new_q->node = node;
-		new_q->next = NULL;
+	else
+	{
+		temp = *q;
+		while (temp->next)
+			temp = temp->next;
+		temp->next = new_q;
 	}
-	temp = *q;
-	while (temp->next)
-		temp = temp->next;
-	temp->next = new_q;
-	temp->next->node = node;
-	temp->next->next = NULL;
 }
 
 t_btree	*dequeue(s_queue **q)
