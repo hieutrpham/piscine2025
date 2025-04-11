@@ -45,5 +45,38 @@ t_btree	*dequeue(s_queue **q)
 
 void	btree_apply_by_level(t_btree *root, void (*applyf)(void *item, int current_level, int is_first))
 {
+	s_queue *queue;
+	t_btree *node;
+	int		level;
+	int		flag;
 
+	flag = 1;
+	level = 0;
+	enqueue(&queue, root);
+	enqueue(&queue, NULL);
+	while (queue)
+	{
+		node = dequeue(&queue);
+		if (node)
+		{
+			if (flag == 1)
+			{
+				applyf(node->item, level, flag);
+				flag = 0;
+			}
+			if (node->left)
+				enqueue(&queue, node->left);
+			if (node->right)
+				enqueue(&queue, node->right);
+		}
+		else
+		{
+			if (queue)
+			{
+				enqueue(&queue, NULL);
+				level++;
+				flag = 1;
+			}
+		}
+	}
 }
